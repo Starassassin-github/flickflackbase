@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+
 const articleSchema = mongoose.Schema({
     title:{
         type:String,
         maxLength:100,
         required:[true,'You need a title']
     },
-    content: {
+    content:{
         type:String,
         required:[true,'You need some content']
     },
-    excerpt: {
+    excerpt:{
         type:String,
-        required:[true,'You need some content'],
-        maxLength:500
+        required:[true,'Please add an excerpt'],
+        maxLength:500,
     },
     score:{
         type:Number,
@@ -46,8 +47,8 @@ const articleSchema = mongoose.Schema({
     date:{
         type: Date,
         default: Date.now
-    },
-})
+    }
+});
 
 const Article = mongoose.model('Article', articleSchema);
 module.exports = { Article };
