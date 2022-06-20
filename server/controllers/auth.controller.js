@@ -1,5 +1,7 @@
 const { authService } = require('../services');
+
 const httpStatus = require('http-status');
+
 
 const authController = {
     async register(req,res,next){
@@ -20,7 +22,8 @@ const authController = {
             })
         } catch(error){
             // console.log(error.message)
-            res.status(httpStatus.BAD_REQUEST).send(error.message)
+            // res.status(httpStatus.BAD_REQUEST).send(error.message)
+            next(error)
         }
     },
     async signin(req,res,next){
@@ -38,7 +41,9 @@ const authController = {
             }) 
             
         } catch (error) {
-            res.status(httpStatus.BAD_REQUEST).send(error.message)
+            // res.status(httpStatus.BAD_REQUEST).send(error.message)
+            next(error)
+
         }
     }
 

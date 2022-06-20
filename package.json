@@ -1,5 +1,5 @@
 {
-  "name": "flickbase",
+  "name": "flickflackbase",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,11 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "author": "",
   "license": "ISC",
@@ -23,9 +27,13 @@
     "express-validator": "^6.14.0",
     "http-status": "^1.5.2",
     "jsonwebtoken": "^8.5.1",
+    "mailgen": "^2.0.24",
     "mongoose": "^6.3.3",
     "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "nodemailer": "^6.7.5",
     "nodemon": "^2.0.16",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   }
