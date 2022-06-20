@@ -45,6 +45,14 @@ const authController = {
             next(error)
 
         }
+    },
+    async isauth(req,res,next) {
+        res.json(req.user)
+    },
+    async testrole(req,res,next){
+        res.json({
+            ok:'yes'
+        })
     }
 
 
