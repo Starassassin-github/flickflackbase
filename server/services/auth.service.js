@@ -1,7 +1,11 @@
 
-import { async } from '../../client/node_modules/rxjs/src/internal/util/isReadableStreamLike';
-/// models
+/// MODELS
 const { User } = require('../models/user')
+
+
+/// SERVICE
+const userService = require('./user.service')
+
 
 const createUser = async(email,password) => {
     try{
@@ -28,10 +32,20 @@ const genAuthToken = (user) => {
 
 const signInWithEmailAndPassword = async(email, password) => {
     try {
+        const user = await userService.findUserByEmail(email);
+        if (!user) {
+            throw new Error('Sorry BAD Email')
+        }
+
+        if (!(await user.comparePassword(password))) {
+            throw new Error('Sorry BAD Password')
+        }
+
+        return user;
 
 
     } catch(error) {
-
+        throw error
     }
 }
 
