@@ -1,4 +1,4 @@
-const { authService } = require('../services');
+const { authService, emailService } = require('../services');
 
 const httpStatus = require('http-status');
 
@@ -13,6 +13,7 @@ const authController = {
             const token = await authService.genAuthToken(user);
 
             // send verification email
+            await emailService.registerEmail(email,user);
 
             /// cookie
             res.cookie('x-access-token', token)
