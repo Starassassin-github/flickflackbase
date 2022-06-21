@@ -59,7 +59,7 @@ const updateArticleById =  async(_id, body) => {
     }
 }
 
-const deleteArticleById =  async(_id, body) => {
+const deleteArticleById =  async(_id) => {
     try{
         const article = await Article.findByIdAndRemove(_id);
         if (!article) throw new ApiError(httpStatus.NOT_FOUND, 'Article not found');
@@ -107,6 +107,37 @@ const moreArticles = async(req) => {
     }
 }
 
+const paginateAdminArticles = async(req) => {
+    try{
+        // let can change
+        let aggQuery = Article.aggregate();
+
+        if (req.body.keywords && req.body.keywords != '') {
+            // what ever get / post on title
+            // method on mongodb expression
+            // RegExp auto compare convert to lowercase
+            const re = new RegExp(`${req.body.keywords}`,'gi')
+            aggQuery = Article.aggregate([
+                { $match: { title: { $regex:re}}}
+            ])
+        } else {
+            aggQuery = Article.aggregate();
+        }
+
+        const limit = req.body.limit ? req.body.limit : 5;
+        const options = {
+            page: req.body.page,
+            limit,
+            sort: { _id:'decs' }
+        }
+        const articles = await Article.aggregatePaginate(aggQuery, options)
+        return articles;
+
+    } catch(error){
+        throw error
+    }
+}
+
 
 
 
@@ -120,6 +151,7 @@ module.exports = {
     updateArticleById,
     deleteArticleById,
     allArticles,
-    moreArticles
+    moreArticles,
+    paginateAdminArticles
 
 }
