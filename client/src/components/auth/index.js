@@ -11,15 +11,15 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
 
 import { registerUser, signInUser } from '../../store/actions/users';
-
+import PreventSignIn from '../../hoc/preventSignIn';
 
 const Auth = () => {
     // comp
     const [register,setRegister] = useState(false);
-    let navigate = useNavigate();
+    let navigate = useNavigate()
     // redux
-    const users = useSelector(state=>state.users);
-    const notification = useSelector(state => state.notifications)
+    const users = useSelector( state => state.users);
+    const notifications = useSelector( state => state.notifications)
     const dispatch = useDispatch();
 
     const formik = useFormik({
@@ -44,15 +44,16 @@ const Auth = () => {
         }
     }
 
+
     useEffect(()=>{
-        if (notification && notification.global.success) {
-            // redirect 
+        if(notifications && notifications.global.success){
             navigate('/dashboard')
         }
-    },[notification])
+    },[notifications])
 
 
     return(
+        <PreventSignIn users={users}>
         <div className='auth_container'>
             <h1>Authenticate</h1>
             { users.loading ?
@@ -101,6 +102,7 @@ const Auth = () => {
             }
 
         </div>
+        </PreventSignIn>
     )
 }
 
