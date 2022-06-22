@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { errorHelper } from '../../utils/tools';
+import { errorHelper,Loader } from '../../utils/tools'
 
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -11,15 +12,18 @@ import Button from '@mui/material/Button';
 
 import { registerUser, signInUser } from '../../store/actions/users';
 
+
 const Auth = () => {
-    // component
+    // comp
     const [register,setRegister] = useState(false);
+    let navigate = useNavigate();
     // redux
-    const users = useSelector((state)=>state.users);
+    const users = useSelector(state=>state.users);
+    const notification = useSelector(state => state.notifications)
     const dispatch = useDispatch();
 
     const formik = useFormik({
-        initialValues:{email:'',password:''},
+        initialValues:{email:'francis@gmail.com',password:'testing123'},
         validationSchema: Yup.object({
             email: Yup.string()
             .required('Sorry the email is required')
@@ -34,16 +38,26 @@ const Auth = () => {
 
     const handleSubmit = (values) => {
         if(register){
-            dispatch(registerUser(values));
+            dispatch(registerUser(values))
         } else {
-            dispatch(signInUser(values));
+            dispatch(signInUser(values))
         }
     }
+
+    useEffect(()=>{
+        if (notification && notification.global.success) {
+            // redirect 
+            navigate('/dashboard')
+        }
+    },[notification])
 
 
     return(
         <div className='auth_container'>
             <h1>Authenticate</h1>
+            { users.loading ?
+                <Loader/>
+            :
             <Box
                 sx={{
                     '& .MuiTextField-root': { width:'100%',marginTop:'20px' },
@@ -82,15 +96,12 @@ const Auth = () => {
                     >
                         Want to { !register ? 'Register': 'Login'}
                     </Button>
-
-
                 </div>
-
-
             </Box>
+            }
 
         </div>
     )
 }
 
-export default Auth;
+export default Auth
