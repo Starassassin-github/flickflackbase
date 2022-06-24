@@ -7,7 +7,6 @@ const AdminProfile = () => {
         <>
               <AdminTitle title="Profile"/>
         ADMIN profile
-
         </>
     )
 
