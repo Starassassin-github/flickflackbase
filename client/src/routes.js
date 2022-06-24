@@ -57,6 +57,7 @@ const Router = () => {
                 <Route path='articles' element={<AdminArticles/>}/>
                 <Route path='articles/add' element={<AddArticle/>}/>
                 <Route path='articles/edit/:articleId' element={<EditArticle/>}/>
+                
             </Route>
             <Route path='/auth' element={<Auth/>}/>
             <Route path='/' element={<Home/>}/>

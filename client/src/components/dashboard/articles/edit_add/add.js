@@ -26,7 +26,7 @@ import FormHelperText from '@mui/material/FormHelperText'
  
 import InputLabel from '@mui/material/InputLabel';
 import AddIcon from '@mui/icons-material/Add';
-import { visuallyHidden } from '@mui/utils';
+// import { visuallyHidden } from '@mui/utils';
 
 
 const AddArticle = () => {
@@ -201,20 +201,16 @@ const AddArticle = () => {
 
                 <Divider className='mt-3 mb-3'/>
 
-
                 { articles.loading ?
-
                     <Loader/>
                 :
-                
-
-                    <Button
-                        variant='contained'
-                        color="primary"
-                        type="submit"
-                    >
-                        Add article
-                    </Button>
+                <Button
+                    variant='contained'
+                    color="primary"
+                    type="submit"
+                >
+                    Add article
+                </Button>
                 }
 
 
