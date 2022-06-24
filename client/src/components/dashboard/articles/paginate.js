@@ -6,7 +6,8 @@ import Moment from 'react-moment';
 const PaginateComponent = ({
     articles,
     goToPrevPage,
-    goToNextPage
+    goToNextPage,
+    goToEdit
 }) => {
 
 
@@ -34,7 +35,7 @@ const PaginateComponent = ({
                                         Remove
                                     </td>
                                     <td className='action_btn edit_btn'
-                                        onClick={()=>alert('GO TO EDIT')}
+                                        onClick={()=> goToEdit(item._id)}
                                     >
                                         Edit
                                     </td>
@@ -50,7 +51,7 @@ const PaginateComponent = ({
                     <Pagination>
                         { articles.hasPrevPage ?
                             <>
-                                <Pagination.Prev
+                                <Pagination.Prev 
                                     onClick={()=> goToPrevPage(articles.prevPage)}
                                 />
                                 <Pagination.Item
