@@ -129,6 +129,7 @@ export const homeLoadMore = createAsyncThunk(
     }
 )
 
+
 export const getArticle = createAsyncThunk(
     'articles/getArticle',
     async(id,{ dispatch })=>{
@@ -141,6 +142,9 @@ export const getArticle = createAsyncThunk(
         }
     }
 )
+
+
+
 
 
 

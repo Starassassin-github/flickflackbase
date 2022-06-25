@@ -13,7 +13,6 @@ import StarIcon from '@mui/icons-material/Star';
 
 const ScoreCard = ({current}) => {
 
-
     return(
         <>
         <hr/>
@@ -22,10 +21,7 @@ const ScoreCard = ({current}) => {
                     <ListItemAvatar>
                         <Avatar><StarIcon/></Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Our score"   
-                        secondary={current.score}
-                        className="rating"
-                    />
+                    <ListItemText primary="Our score" secondary={current.score} className="rating"/>
                 </ListItem>
                 <Divider variant='inset' component="li"/>
                 <ListItem>
@@ -33,13 +29,13 @@ const ScoreCard = ({current}) => {
                         <Avatar><PersonIcon/></Avatar>
                     </ListItemAvatar>
                     <div>
-                        { current.actors.map((item,index) => (
+                        { current.actors.map((item,index)=>(
                             <Chip
-                                key={`${item + index}`}
+                                key={`${item+index}`}
                                 item={item}
                                 label={item}
                                 clickable
-                                color='primary'
+                                color="primary"
                                 className='chip'
                             />
                         ))}
@@ -50,12 +46,11 @@ const ScoreCard = ({current}) => {
                     <ListItemAvatar>
                         <Avatar><MovieIcon/></Avatar>
                     </ListItemAvatar>
-                    <ListItemText
-                        primary="Director" 
-                        secondary={current.director}
-                    />
+                    <ListItemText primary="Director" secondary={current.director} />
                 </ListItem>
             </List>
+           
+
         </>
     )
 }
