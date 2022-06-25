@@ -62,7 +62,6 @@ userSchema.pre('save',async function(next){
     next()
 })
 
-
 userSchema.statics.emailTaken = async function(email){
     const user = await this.findOne({email});
     return !!user
@@ -70,31 +69,25 @@ userSchema.statics.emailTaken = async function(email){
 
 userSchema.methods.generateAuthToken = function(){
     let user = this;
-    const userObj = {
-        sub: user._id.toHexString(),
-        email: user.email
-    };
-    const token = jwt.sign(userObj,process.env.DB_SECRET, { expiresIn: '1d'})
+    const userObj = { sub: user._id.toHexString(),email: user.emal};
+    const token = jwt.sign(userObj,process.env.DB_SECRET,{ expiresIn:'1d'})
     return token;
 }
 
-userSchema.methods.comparePassword = async function(candidatePassword) {
-    /// candidate  password = un-hashed password
-    // data from DB if before the complete
-    const user = this
-    // can access if find by email
+userSchema.methods.comparePassword = async function(candidatePassword){
+    /// candidate password = un-hashed password
+    const user = this;
     const match = await bcrypt.compare(candidatePassword, user.password);
-    return match    // true, false
+    return match
 }
 
 userSchema.methods.generateRegisterToken = function(){
     let user = this;
-    const userObj = {
-        sub: user._id.toHexString()
-    };
-    const token = jwt.sign(userObj,process.env.DB_SECRET, { expiresIn: '10h'})
+    const userObj = { sub: user._id.toHexString()};
+    const token = jwt.sign(userObj,process.env.DB_SECRET,{ expiresIn:'10h'})
     return token;
 }
+
 
 
 const User = mongoose.model('User', userSchema);

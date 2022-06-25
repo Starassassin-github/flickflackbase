@@ -1,61 +1,46 @@
 const { authService, emailService } = require('../services');
-
 const httpStatus = require('http-status');
-
 
 const authController = {
     async register(req,res,next){
         try{
             const { email, password } = req.body;
             const user = await authService.createUser(email, password);
-            
-            /// token
             const token = await authService.genAuthToken(user);
 
             // send verification email
             await emailService.registerEmail(email,user);
 
-            /// cookie
-            res.cookie('x-access-token', token)
+            res.cookie('x-access-token',token)
             .status(httpStatus.CREATED).send({
                 user,
                 token
             })
         } catch(error){
-            // console.log(error.message)
+            //console.log(error.message)
             // res.status(httpStatus.BAD_REQUEST).send(error.message)
-            next(error)
+            next(error);
         }
     },
     async signin(req,res,next){
         try {
             const { email, password } = req.body;
             const user = await authService.signInWithEmailAndPassword(email, password);
-            // create a new token
             const token = await authService.genAuthToken(user);
 
-            /// cookie
-            res.cookie('x-access-token', token)
-            .send({
-                user,
-                token
-            }) 
-            
-        } catch (error) {
+            res.cookie('x-access-token',token)
+            .send({ user,token })
+        }catch(error){
             // res.status(httpStatus.BAD_REQUEST).send(error.message)
-            next(error)
-
+            next(error);
         }
     },
-    async isauth(req,res,next) {
-        res.json(req.user)
+    async isauth(req,res,next){
+        res.json(req.user);
     },
     async testrole(req,res,next){
-        res.json({
-            ok:'yes'
-        })
+        res.json({ok:'yes'});
     }
-
 
 }
 

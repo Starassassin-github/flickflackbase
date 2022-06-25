@@ -1,49 +1,47 @@
 const httpStatus = require('http-status');
-const { ApiError } = require('../middleware/apiError');
+const { ApiError } = require('../middleware/apiError')
 
-const { userService, authService ,emailService} = require('../services');
+const { userService, authService, emailService} = require('../services');
 
-const userController = { 
+const userController = {
     async profile(req,res,next){
-        try {
+        try{
             const user = await userService.findUserById(req.user._id);
-            if (!user) {
-                throw new ApiError(httpStatus.NOT_FOUND, 'User not fond');
+            if(!user){
+                throw new ApiError(httpStatus.NOT_FOUND,'User not found')
             }
             res.json(res.locals.permission.filter(user._doc))
-        } catch (error) {
+        } catch(error){
             next(error)
         }
     },
-    async updateProfile(req,res,next) {
-        try {
+    async updateProfile(req,res,next){
+        try{
             const user = await userService.updateUserProfile(req)
             res.json(res.locals.permission.filter(user._doc))
-        } catch (error) {
+        } catch(error){
             next(error)
         }
     },
-    async updateUserEmail(req,res,next) {
-        try {
-            const user = await userService.updateUserEmail(req)
-            const token = await authService.genAuthToken(user)
-
+    async updateUserEmail(req,res,next){
+        try{
+            const user = await userService.updateUserEmail(req);
+            const token = await authService.genAuthToken(user);
+            
             // send verification email
             await emailService.registerEmail(user.email,user);
-
-
+            
             res.cookie('x-access-token',token)
             .send({
                 user: res.locals.permission.filter(user._doc),
                 token
             })
-        } catch (error) {
+        } catch(error){
             next(error)
         }
     },
-
-    async verifyAccout(req,res,next) {
-        try {
+    async verifyAccout(req,res,next){
+        try{
             const token = userService.validateToken(req.query.validation);
             const user = await userService.findUserById(token.sub);
 
@@ -56,12 +54,11 @@ const userController = {
                 email: user.email,
                 verified:true
             })
-
-        } catch (error) {
+        } catch(error){
             next(error)
         }
     }
-
 }
 
-module.exports = userController
+
+module.exports = userController;

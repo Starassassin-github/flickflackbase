@@ -5,14 +5,13 @@ const { addArticleValidator } = require('../middleware/validation');
 
 const auth = require('../middleware/auth');
 
-// wait auth() and addArticleValidator => controller
-router.post('/',auth('createAny','articles'), addArticleValidator, articlesController.createArticle)
 
+router.post('/',auth('createAny','articles'),addArticleValidator,articlesController.createArticle)
 
 router.route('/article/:id')
 .get(auth('readAny','articles'),articlesController.getArticleById)
 .patch(auth('updateAny','articles'),articlesController.updateArticleById)
-.delete(auth('deleteAny', 'articles'),articlesController.deleteArticleById)
+.delete(auth('deleteAny','articles'),articlesController.deleteArticleById)
 
 router.route('/users/article/:id')
 .get(articlesController.getUsersArticleById)
@@ -22,5 +21,6 @@ router.route('/all')
 .post(articlesController.getMoreArticles)
 
 router.post('/admin/paginate',auth('readAny','articles'),articlesController.adminPaginate)
+
 
 module.exports = router;

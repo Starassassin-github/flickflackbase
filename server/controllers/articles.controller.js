@@ -15,7 +15,7 @@ const articlesController = {
     async getArticleById(req,res,next){
         try{
             const _id = req.params.id;
-            const article = await articlesService.getArticleById(_id, req.user)
+            const article = await articlesService.getArticleById(_id,req.user);
             res.json(article);
         } catch(error){
             next(error)
@@ -24,7 +24,7 @@ const articlesController = {
     async getUsersArticleById(req,res,next){
         try{
             const _id = req.params.id;
-            const article = await articlesService.getUsersArticleById(_id)
+            const article = await articlesService.getUsersArticleById(_id);
             res.json(article);
         } catch(error){
             next(error)
@@ -47,10 +47,10 @@ const articlesController = {
         } catch(error){
             next(error)
         }
-    }, 
+    },
     async getAllArticles(req,res,next){
         try{
-            const articles = await articlesService.allArticles(req)
+           const articles = await articlesService.allArticles(req)
             res.json(articles)
         } catch(error){
             next(error)
@@ -72,11 +72,6 @@ const articlesController = {
             next(error)
         }
     },
-
-
-    
-
-
 }
 
 module.exports = articlesController;

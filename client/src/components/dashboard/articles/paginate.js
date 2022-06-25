@@ -32,7 +32,7 @@ const PaginateComponent = ({
                                     <td>{item.title}</td>
                                     <td>{item.score}</td>
                                     <td className='action_btn remove_btn'
-                                        onClick={()=> handleShow(item._id)}
+                                        onClick={()=> handleShow(item._id) }
                                     >
                                         Remove
                                     </td>
